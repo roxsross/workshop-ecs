@@ -1,0 +1,24 @@
+services:
+  vote:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DDB_AWS_REGION=us-east-1
+      - DDB_TABLE_NAME=votes
+      - ENV=local
+    depends_on:
+      - vote-db
+  
+  vote-db:
+    image: amazon/dynamodb-local
+    hostname: vote-db
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DYNAMODB_LOCAL=true
+      - AWS_ACCESS_KEY_ID=FAKE
+      - AWS_SECRET_ACCESS_KEY=FAKE
