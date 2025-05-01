@@ -59,7 +59,7 @@ def init_dynamodb():
             logger.info("Inicializando contador para 'cats'")
             table.put_item(Item={
                 'name': 'cats',
-                'restaurantcount': 0,
+                'votecount': 0,
                 'last_vote': '',
                 'created_at': time.strftime("%Y-%m-%d %H:%M:%S")
             })
@@ -68,7 +68,7 @@ def init_dynamodb():
             logger.info("Inicializando contador para 'dogs'")
             table.put_item(Item={
                 'name': 'dogs',
-                'restaurantcount': 0,
+                'votecount': 0,
                 'last_vote': '',
                 'created_at': time.strftime("%Y-%m-%d %H:%M:%S")
             })

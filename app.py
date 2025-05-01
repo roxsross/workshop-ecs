@@ -50,8 +50,8 @@ if env == "local":
         time.sleep(2)
         
         ddbtable = ddb.Table(ddb_table_name)
-        ddbtable.put_item(Item={'name': 'cats', 'restaurantcount': 0, 'last_vote': datetime.now().isoformat()})
-        ddbtable.put_item(Item={'name': 'dogs', 'restaurantcount': 0, 'last_vote': datetime.now().isoformat()})
+        ddbtable.put_item(Item={'name': 'cats', 'votecount': 0, 'last_vote': datetime.now().isoformat()})
+        ddbtable.put_item(Item={'name': 'dogs', 'votecount': 0, 'last_vote': datetime.now().isoformat()})
         logger.info("Tabla inicializada con valores predeterminados")
 else:
     logger.info("Usando DynamoDB en AWS")
@@ -80,12 +80,12 @@ def read_vote(entity):
             logger.warning(f"La entidad {entity} no existe en la base de datos, inicializando...")
             ddbtable.put_item(Item={
                 'name': entity, 
-                'restaurantcount': 0,
+                'votecount': 0,
                 'last_vote': datetime.now().isoformat()
             })
             return 0
             
-        votes = json_response["Item"]["restaurantcount"]
+        votes = json_response["Item"]["votecount"]
         return int(votes)
     except Exception as e:
         logger.error(f"Error al leer votos para {entity}: {str(e)}")
@@ -95,7 +95,7 @@ def update_vote(entity, votes):
     try:
         response = ddbtable.update_item(
             Key={'name': entity},
-            UpdateExpression='SET restaurantcount = :value, last_vote = :timestamp',
+            UpdateExpression='SET votecount = :value, last_vote = :timestamp',
             ExpressionAttributeValues={
                 ':value': votes,
                 ':timestamp': datetime.now().isoformat()
@@ -116,7 +116,7 @@ def get_vote_history(entity, limit=10):
         if 'Item' not in json_response:
             return []
             
-        votes = json_response["Item"]["restaurantcount"]
+        votes = json_response["Item"]["votecount"]
         last_vote = json_response["Item"].get("last_vote", datetime.now().isoformat())
         
         history = []

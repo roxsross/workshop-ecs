@@ -89,7 +89,7 @@ Lo primero que debes hacer es crear la imagen del contenedor de la aplicación p
     --table-name votes \
     --item "{
         \"name\": {\"S\": \"cats\"},
-        \"restaurantcount\": {\"N\": \"0\"},
+        \"votecount\": {\"N\": \"0\"},
         \"last_vote\": {\"S\": \"\"},
         \"created_at\": {\"S\": \"$(date +%Y-%m-%d\ %H:%M:%S)\"}
     }" \
@@ -101,7 +101,7 @@ Lo primero que debes hacer es crear la imagen del contenedor de la aplicación p
     --table-name votes \
     --item "{
         \"name\": {\"S\": \"dogs\"},
-        \"restaurantcount\": {\"N\": \"0\"},
+        \"votecount\": {\"N\": \"0\"},
         \"last_vote\": {\"S\": \"\"},
         \"created_at\": {\"S\": \"$(date +%Y-%m-%d\ %H:%M:%S)\"}
     }" \
